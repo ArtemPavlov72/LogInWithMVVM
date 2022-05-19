@@ -13,14 +13,24 @@ class LoginViewController: UIViewController {
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var surnameTextField: UITextField!
     
+    var viewModel: LoginViewModelProtocol! {
+        didSet {
+            viewModel.viewModelDidChange = { [unowned self] viewModel in
+                self.greetingLabel.text = viewModel.greetingText
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     @IBAction func loginPressed() {
+        viewModel = LoginViewModel(
+            personName: nameTextField.text ?? "",
+            personSurname: surnameTextField.text ?? ""
+        )
+        viewModel.showGreeting()
     }
-    
 }
 
