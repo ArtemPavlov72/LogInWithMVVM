@@ -15,9 +15,12 @@ protocol LoginViewModelProtocol {
 }
 
 class LoginViewModel: LoginViewModelProtocol {
-    var personName: String
-    var personSurname: String
     
+    //MARK: - Private Properties
+    private var personName: String
+    private var personSurname: String
+    
+    //MARK: - LoginViewModel init
     var greetingText: String? {
         didSet {
             viewModelDidChange?(self)
@@ -32,7 +35,13 @@ class LoginViewModel: LoginViewModelProtocol {
     }
     
     func showGreeting() {
-        let person = Person(name: personName, surname: personSurname)
+        let person = getPerson()
         greetingText = "Hello, \(person.name) \(person.surname)!"
+    }
+    
+    //MARK: - Private Methods
+    private func getPerson() -> Person {
+        let person = Person(name: personName, surname: personSurname)
+        return person
     }
 }
